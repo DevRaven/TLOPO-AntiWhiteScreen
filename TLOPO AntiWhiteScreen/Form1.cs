@@ -67,8 +67,6 @@ namespace TLOPO_AntiWhiteScreen
                         //it exists, time to clean up
                         CacheCleared.Text = "Cache NOT cleared";
                         CacheCleared.ForeColor = Color.Red;
-                        //delay to prevent constantly deleting subfiles while loading maps
-                        await Task.Delay(2000);
                         //get all subfiles
                         string[] files = Directory.GetFiles(TargetDir+"/cache-test");
                         //delete subfiles
