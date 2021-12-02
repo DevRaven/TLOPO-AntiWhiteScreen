@@ -77,17 +77,23 @@ namespace TLOPO_AntiWhiteScreen
                             File.SetAttributes(file, FileAttributes.Normal);
                             File.Delete(file);
                         }
-                        //try to delete main folder, placed in try catch to prevent errors incase subfiles are created while deleting main folder
-                        try
+                        //delay to prevent constantly deleting subfiles while logging in
+                        await Task.Delay(2000);
+                        //check if files still exist
+                        string[] filesAgain = Directory.GetFiles(TargetDir + "/cache-test");
+                        if (filesAgain.Length == 0)
                         {
-                            Directory.Delete(TargetDir+"/cache-test", false);
-                        }
-                        catch (IOException v)
-                        {
-                            //throw away error, next loop will attempt again, cant be assed making this recursively delete subfiles until its confirmed to all be gone
-                            if (v.Source != null)
-                                Console.WriteLine("IOException source: {0}", v.Source);
-                            throw;
+                            //no more files to delete, remove main folder
+                            try
+                            {
+                                //try to delete main folder, placed in try catch to prevent errors incase subfiles are created while deleting main folder
+                                Directory.Delete(TargetDir + "/cache-test", false);
+                            }
+                            catch (IOException)
+                            {
+                                //throw away error, next loop will attempt again, cant be assed making this recursively delete subfiles until its confirmed to all be gone
+                                throw;
+                            }
                         }
                         
                     } else
