@@ -111,7 +111,7 @@ namespace TLOPO_AntiWhiteScreen
             }
         }
 
-        //ngl this is some shit i took off stackoverflow, reading ram is a pain in the ass
+        //read from memory
         public static class PerformanceInfo
         {
             [DllImport("psapi.dll", SetLastError = true)]
